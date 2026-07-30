@@ -40,13 +40,11 @@ Your application folder should have the following structure and/or files:
 
 ### 3. Copy the content of `./updater/app-root` to the root of your application folder
 
-Your app’s root folder should contain a copy of the files under `./updater/app-root`. It contains:
+Your app’s root folder should contain a copy of the files under `./updater/app-root`.  
 
+It contains:
  - a template/example `config-updater.ini` file, that you will need to modify in the next step.
  - a wrapper `update.sh` script.
-
-The main `updater` logic lives inside `./updater/updater.sh`. 
-The `update.sh` script just provides a means to load your local config and run the actual updater.
 
 From inside your app’s root folder (`./` in the example above), run:
 
@@ -55,13 +53,18 @@ cp ./updater/app-root/config-updater.ini ./config-updater.ini
 cp ./updater/app-root/update.sh ./update.sh
 ```
 
+The main `updater` logic lives inside `./updater/updater.sh`.  
+The `update.sh` script just provides a means to load your local config and run the actual updater.
+
 ### 4. Modify `config-updater.ini` according to the needs of your application
 
-Edit `./config-updater.ini` to match your application's needs. For more information the explanations inside the template/example config itself.
+Edit `./config-updater.ini` to match your application's needs.  
+
+> For more information, see the comments inside the template/example config itself.
 
 ### 5. Done
 
-You should be good to go now.
+You should be good to go now.  
 
 In some cases your application might need/benefit from having extra some hooked scripts, for example: 
 
@@ -78,7 +81,7 @@ Simply run:
 
 The `update.sh` is a wrapper script:
 
-```
+```bash
 #!/usr/bin/env bash
 set -e
 
@@ -89,9 +92,9 @@ source ./config-updater.ini
 bash updater/updater.sh
 ```
 
-It will 'source' the local config first and then call the Updater: `./updater/updater.sh`.
+It will 'source' the local config first and then call the Updater: `./updater/updater.sh`.  
 
-The Updater will:
+The Updater will:  
 
 - detect the installed version (or will detect nothing or no `version.txt` file to be there)
 - fetch the latest version
@@ -109,9 +112,9 @@ The Updater will:
 
 ## Updating the Updater Itself (Git Subtree)
 
-The Updater is designed to be 'embedded' inside an application folder, which might be a git repository as well.
+The Updater is designed to be 'embedded' inside an application folder, which might be a git repository as well.  
 
-To keep it updated, use a **git subtree**, which allows you to pull updates from the upstream updater repository.
+To keep it updated, use a **git subtree**, which allows you to pull updates from the upstream updater repository.  
 
 You can either do this manually: 
 
