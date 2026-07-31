@@ -192,19 +192,31 @@ log "Installing new version..."
 mkdir -p "$DEST_DIR"
 
 if [[ -z "$UPDATER_EXTRACT_COMMAND" ]]; then
-    case "$LATEST_FILENAME" in
+    case "${LATEST_FILENAME,,}" in
         *.tar.gz|*.tgz)          UPDATER_EXTRACT_COMMAND="tar -xzf" ;;
         *.tar.xz|*.txz|*.tar)    UPDATER_EXTRACT_COMMAND="tar -xf" ;;
         *.zip)                   UPDATER_EXTRACT_COMMAND="unzip" ;;
+        *.appimage)              UPDATER_EXTRACT_COMMAND="mv_and_chmod" ;;
         *)                       UPDATER_EXTRACT_COMMAND="mv" ;;
     esac
 fi
 
-if [[ "$UPDATER_EXTRACT_COMMAND" == "mv" ]]; then
-    mv "$TMPFILE" "$DEST_DIR/$LATEST_FILENAME"
-else
-    $UPDATER_EXTRACT_COMMAND "$TMPFILE" -C "$DEST_DIR"
-fi
+case "$UPDATER_EXTRACT_COMMAND" in
+    mv)
+        TARGET="$DEST_DIR/$LATEST_FILENAME"
+        mv "$TMPFILE" "$TARGET"
+        ;;
+
+    mv_and_chmod)
+        TARGET="$DEST_DIR/$LATEST_FILENAME"
+        mv "$TMPFILE" "$TARGET"
+        chmod +x "$TARGET"
+        ;;
+
+    *)
+        $UPDATER_EXTRACT_COMMAND "$TMPFILE" -C "$DEST_DIR"
+        ;;
+esac
 
 # ------------------------------------------------------------
 # Auto-flatten extracted directory structure
