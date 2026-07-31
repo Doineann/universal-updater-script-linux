@@ -85,11 +85,13 @@ The `update.sh` is a wrapper script:
 #!/usr/bin/env bash
 set -e
 
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+
 # Load the local config
-source ./config-updater.ini
+source "$SCRIPT_DIR/config-updater.ini"
 
 # Run the universal updater
-bash updater/updater.sh
+bash "$SCRIPT_DIR/updater/updater.sh"
 ```
 
 It will 'source' the local config first and then call the Updater: `./updater/updater.sh`.  
