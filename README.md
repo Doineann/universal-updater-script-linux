@@ -127,5 +127,5 @@ git subtree pull --prefix updater "https://github.com/doineann/universal-updater
 or use the provided script, run like this:
 
 ```bash
-./updater/subtree-update.sh
+./updater/update-self.sh
 ```
